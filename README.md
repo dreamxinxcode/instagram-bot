@@ -4,7 +4,7 @@
 
 `$ pip install -r requiremnets.txt`
 
-### Add credentials to .env
+### Create and add credentials to a .env file in the root of the repo
 ```
 USERNAME=instagram_useranme
 
