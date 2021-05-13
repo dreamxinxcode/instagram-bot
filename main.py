@@ -41,17 +41,6 @@ class Bot():
     def go_to(self, url):
         self.driver.get(url)
 
-    def follower_count(self, username):
-        self.xpath = '//*[@id="react-root"]/section/main/div/header/section/ul/li[3]/a/span'
-        self.go_to(f'https://instagram.com/{username}')
-
-        try:
-            count = WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located((By.XPATH, self.xpath))).text
-            print(count)
-        except TimeoutException:
-            return 'Timeout'
-
     def login(self):
         self.go_to('https://instagram.com/accounts/login')
 
@@ -71,8 +60,31 @@ class Bot():
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(
             (By.XPATH, '//*[@id="react-root"]/section/nav/div[2]/div/div/div[2]/input')))
 
+    def follower_count(self, username):
+        self.xpath = '//*[@id="react-root"]/section/main/div/header/section/ul/li[2]/a/span'
+        self.go_to(f'https://instagram.com/{username}')
+
+        try:
+            count = WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, self.xpath))).text
+            print(count)
+        except TimeoutException:
+            return 'Timeout'
+
+    def following_count(self, username):
+        self.xpath = '//*[@id="react-root"]/section/main/div/header/section/ul/li[3]/a/span'
+        self.go_to(f'https://instagram.com/{username}')
+
+        try:
+            count = WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, self.xpath))).text
+            print(count)
+        except TimeoutException:
+            return 'Timeout'
+
 
 bot = Bot(os.environ.get('USERNAME'), os.environ.get('PASSWORD'))
 bot.start()
 bot.login()
 bot.follower_count('nike')
+bot.following_count('nike')
